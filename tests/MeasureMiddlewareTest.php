@@ -14,8 +14,7 @@ final class MeasureMiddlewareTest extends TestCase
 {
     public function testMetrics()
     {
-        $prefix = 'prefix.';
-        $middleware = new MeasureMiddleware($prefix);
+        $middleware = new MeasureMiddleware();
 
         $metrics = $this->await(Promise::fromObservable($middleware->collect()->toArray()));
         self::assertCount(6, $metrics);
@@ -34,13 +33,13 @@ final class MeasureMiddlewareTest extends TestCase
 
         /** @var Metric $current */
         $current = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
-            return $metric->getKey() === 'prefix.current';
+            return $metric->getKey() === 'current';
         })));
         self::assertSame(1.0, $current->getValue(), $current->getKey());
 
         /** @var Metric $current */
         $theRest = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
-            return $metric->getKey() !== 'prefix.current';
+            return $metric->getKey() !== 'current';
         })->toArray()));
 
         /** @var Metric $metric */
@@ -54,19 +53,19 @@ final class MeasureMiddlewareTest extends TestCase
 
         /** @var Metric $current */
         $current = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
-            return $metric->getKey() === 'prefix.current';
+            return $metric->getKey() === 'current';
         })));
         self::assertSame(0.0, $current->getValue(), $current->getKey());
 
         /** @var Metric $current */
         $total = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
-            return $metric->getKey() === 'prefix.total';
+            return $metric->getKey() === 'total';
         })));
         self::assertSame(1.0, $total->getValue(), $total->getKey());
 
         /** @var Metric $current */
         $theRest = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
-            return $metric->getKey() !== 'prefix.current' && $metric->getKey() !== 'prefix.total';
+            return $metric->getKey() !== 'current' && $metric->getKey() !== 'total';
         })->toArray()));
 
         /** @var Metric $metric */

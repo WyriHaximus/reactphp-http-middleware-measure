@@ -11,11 +11,6 @@ use function React\Promise\resolve;
 
 final class MeasureMiddleware implements CollectorInterface
 {
-    private const DEFAULT_PREFIX = '';
-
-    /** @var string */
-    private $prefix = self::DEFAULT_PREFIX;
-
     /** @var int */
     private $current = 0;
 
@@ -33,11 +28,6 @@ final class MeasureMiddleware implements CollectorInterface
 
     /** @var float */
     private $tookTotal = 0.0;
-
-    public function __construct(string $prefix = self::DEFAULT_PREFIX)
-    {
-        $this->prefix = $prefix;
-    }
 
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
@@ -65,12 +55,12 @@ final class MeasureMiddleware implements CollectorInterface
     public function collect(): ObservableInterface
     {
         $metrics = [
-            new Metric($this->prefix . 'current', $this->current),
-            new Metric($this->prefix . 'total', $this->total),
-            new Metric($this->prefix . 'took.min', $this->tookMin === null ? 0.0 : $this->tookMin),
-            new Metric($this->prefix . 'took.max', $this->tookMax),
-            new Metric($this->prefix . 'took.average', $this->tookAvg),
-            new Metric($this->prefix . 'took.total', $this->tookTotal),
+            new Metric('current', $this->current),
+            new Metric('total', $this->total),
+            new Metric('took.min', $this->tookMin === null ? 0.0 : $this->tookMin),
+            new Metric('took.max', $this->tookMax),
+            new Metric('took.average', $this->tookAvg),
+            new Metric('took.total', $this->tookTotal),
         ];
 
         $this->total = 0;
