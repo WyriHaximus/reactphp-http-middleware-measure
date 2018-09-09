@@ -34,6 +34,13 @@
             "php": "7.2"
         }
     },
+    "extra": {
+        "react-inspector": {
+            "collectors": {
+                "WyriHaximus\\React\\Http\\Middleware": "src/"
+            }
+        }
+    },
     "scripts": {
         "ensure-installed": "composer install --ansi -n -q",
         "cs": [
