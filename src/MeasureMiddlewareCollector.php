@@ -29,7 +29,7 @@ final class MeasureMiddlewareCollector implements CollectorInterface
          */
         foreach ($this->middlewares as $key => $middleware) {
             /** @var Metric $metric */
-            foreach ($middleware->collect()->toArray() as $metric) {
+            foreach ($middleware->collect() as $metric) {
                 $metrics[] = new Metric(
                     $key . '.' . $metric->getKey(),
                     $metric->getValue(),

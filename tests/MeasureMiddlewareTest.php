@@ -9,6 +9,7 @@ use RingCentral\Psr7\ServerRequest;
 use Rx\React\Promise;
 use WyriHaximus\React\Http\Middleware\MeasureMiddleware;
 use WyriHaximus\React\Inspector\Metric;
+use function ApiClients\Tools\Rx\observableFromArray;
 
 final class MeasureMiddlewareTest extends TestCase
 {
@@ -16,7 +17,7 @@ final class MeasureMiddlewareTest extends TestCase
     {
         $middleware = new MeasureMiddleware();
 
-        $metrics = $this->await(Promise::fromObservable($middleware->collect()->toArray()));
+        $metrics = iterator_to_array($middleware->collect());
         self::assertCount(6, $metrics);
 
         /** @var Metric $metric */
@@ -29,16 +30,16 @@ final class MeasureMiddlewareTest extends TestCase
             return $deferred->promise();
         });
 
-        $metrics = $middleware->collect();
+        $metrics = iterator_to_array($middleware->collect());
 
         /** @var Metric $current */
-        $current = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
+        $current = $this->await(Promise::fromObservable(observableFromArray($metrics)->filter(function (Metric $metric) {
             return $metric->getKey() === 'current';
         })));
         self::assertSame(1.0, $current->getValue(), $current->getKey());
 
         /** @var Metric $current */
-        $theRest = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
+        $theRest = $this->await(Promise::fromObservable(observableFromArray($metrics)->filter(function (Metric $metric) {
             return $metric->getKey() !== 'current';
         })->toArray()));
 
@@ -49,22 +50,22 @@ final class MeasureMiddlewareTest extends TestCase
 
         $deferred->resolve(new Response());
 
-        $metrics = $middleware->collect();
+        $metrics = iterator_to_array($middleware->collect());
 
         /** @var Metric $current */
-        $current = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
+        $current = $this->await(Promise::fromObservable(observableFromArray($metrics)->filter(function (Metric $metric) {
             return $metric->getKey() === 'current';
         })));
         self::assertSame(0.0, $current->getValue(), $current->getKey());
 
         /** @var Metric $current */
-        $total = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
+        $total = $this->await(Promise::fromObservable(observableFromArray($metrics)->filter(function (Metric $metric) {
             return $metric->getKey() === 'total';
         })));
         self::assertSame(1.0, $total->getValue(), $total->getKey());
 
         /** @var Metric $current */
-        $theRest = $this->await(Promise::fromObservable($metrics->filter(function (Metric $metric) {
+        $theRest = $this->await(Promise::fromObservable(observableFromArray($metrics)->filter(function (Metric $metric) {
             return $metric->getKey() !== 'current' && $metric->getKey() !== 'total';
         })->toArray()));
 

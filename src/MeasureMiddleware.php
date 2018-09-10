@@ -3,13 +3,10 @@
 namespace WyriHaximus\React\Http\Middleware;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Rx\ObservableInterface;
-use WyriHaximus\React\Inspector\CollectorInterface;
 use WyriHaximus\React\Inspector\Metric;
-use function ApiClients\Tools\Rx\observableFromArray;
 use function React\Promise\resolve;
 
-final class MeasureMiddleware implements CollectorInterface
+final class MeasureMiddleware
 {
     /** @var int */
     private $current = 0;
@@ -52,24 +49,20 @@ final class MeasureMiddleware implements CollectorInterface
         });
     }
 
-    public function collect(): ObservableInterface
+    public function collect(): iterable
     {
-        $metrics = [
-            new Metric('current', $this->current),
-            new Metric('total', $this->total),
-            new Metric('took.min', $this->tookMin === null ? 0.0 : $this->tookMin),
-            new Metric('took.max', $this->tookMax),
-            new Metric('took.average', $this->tookAvg),
-            new Metric('took.total', $this->tookTotal),
-        ];
+        yield new Metric('current', $this->current);
+        yield new Metric('total', $this->total);
+        yield new Metric('took.min', $this->tookMin === null ? 0.0 : $this->tookMin);
+        yield new Metric('took.max', $this->tookMax);
+        yield new Metric('took.average', $this->tookAvg);
+        yield new Metric('took.total', $this->tookTotal);
 
         $this->total = 0;
         $this->tookMin = null;
         $this->tookMax = 0.0;
         $this->tookAvg = 0.0;
         $this->tookTotal = 0;
-
-        return observableFromArray($metrics);
     }
 
     public function cancel(): void
