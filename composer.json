@@ -11,8 +11,7 @@
     "require": {
         "php": "^7.2",
         "psr/http-message": "^1.0",
-        "react/http": "^0.8.0",
-        "wyrihaximus/react-inspector": "dev-master"
+        "react/http": "^0.8.0"
     },
     "require-dev": {
         "api-clients/test-utilities": "^5.1",
@@ -32,13 +31,6 @@
         "sort-packages": true,
         "platform": {
             "php": "7.2"
-        }
-    },
-    "extra": {
-        "react-inspector": {
-            "collectors": {
-                "WyriHaximus\\React\\Http\\Middleware": "src/"
-            }
         }
     },
     "scripts": {
