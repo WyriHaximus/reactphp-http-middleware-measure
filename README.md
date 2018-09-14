@@ -1,4 +1,4 @@
-# Middleware to measure how many and how fast requests are handled by your server
+# react/http middleware that gathers metrics on requests passing through
 
 [![Build Status](https://travis-ci.com/WyriHaximus/reactphp-http-middleware-measure.svg?branch=master)](https://travis-ci.com/WyriHaximus/reactphp-http-middleware-measure)
 [![Latest Stable Version](https://poser.pugx.org/WyriHaximus/react-http-middleware-measure/v/stable.png)](https://packagist.org/packages/WyriHaximus/react-http-middleware-measure)

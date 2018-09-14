@@ -1,6 +1,6 @@
 {
     "name": "wyrihaximus/react-http-middleware-measure",
-    "description": "react/http middleware that gathers metrics on request passing through",
+    "description": "react/http middleware that gathers metrics on requests passing through",
     "license": "MIT",
     "authors": [
         {
