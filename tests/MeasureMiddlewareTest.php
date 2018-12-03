@@ -9,9 +9,12 @@ use RingCentral\Psr7\Response;
 use RingCentral\Psr7\ServerRequest;
 use WyriHaximus\React\Http\Middleware\MeasureMiddleware;
 
+/**
+ * @internal
+ */
 final class MeasureMiddlewareTest extends TestCase
 {
-    public function testMetrics()
+    public function testMetrics(): void
     {
         $map = function ($value, $key) {
             return [
@@ -21,7 +24,7 @@ final class MeasureMiddlewareTest extends TestCase
         };
         $middleware = new MeasureMiddleware();
 
-        $metrics = iterator_to_array($middleware->collect());
+        $metrics = \iterator_to_array($middleware->collect());
         self::assertCount(6, $metrics);
 
         foreach ($metrics as $key => $value) {
@@ -33,7 +36,7 @@ final class MeasureMiddlewareTest extends TestCase
             return $deferred->promise();
         });
 
-        $metrics = iterator_to_array($middleware->collect());
+        $metrics = \iterator_to_array($middleware->collect());
 
         $current = (new Collection($metrics))->map($map)->filter(function (array $metric) {
             return $metric['key'] === 'current';
@@ -50,7 +53,7 @@ final class MeasureMiddlewareTest extends TestCase
 
         $deferred->resolve(new Response());
 
-        $metrics = iterator_to_array($middleware->collect());
+        $metrics = \iterator_to_array($middleware->collect());
 
         $current = (new Collection($metrics))->map($map)->filter(function (array $metric) {
             return $metric['key'] === 'current';

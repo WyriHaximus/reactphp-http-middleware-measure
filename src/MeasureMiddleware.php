@@ -28,10 +28,10 @@ final class MeasureMiddleware
     public function __invoke(ServerRequestInterface $request, callable $next)
     {
         $this->current++;
-        $start = microtime(true);
+        $start = \microtime(true);
 
-        return resolve($next($request))->always(function () use ($start) {
-            $took = microtime(true) - $start;
+        return resolve($next($request))->always(function () use ($start): void {
+            $took = \microtime(true) - $start;
             $this->current--;
             $this->total++;
             $this->tookTotal += $took;
