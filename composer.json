@@ -15,7 +15,7 @@
     },
     "require-dev": {
         "api-clients/test-utilities": "^5.4",
-        "cakephp/collection": "^3.6",
+        "cakephp/collection": "^3.7",
         "ringcentral/psr7": "^1.2.2"
     },
     "autoload": {
