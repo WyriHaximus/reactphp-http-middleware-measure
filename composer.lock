@@ -661,16 +661,16 @@
         },
         {
             "name": "cakephp/collection",
-            "version": "3.8.5",
+            "version": "3.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/collection.git",
-                "reference": "460f4e84de9e2761e8216359022581c7d43e80ae"
+                "reference": "1f15659671fbbd46d4a48b19bb8fac3ae4857cc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/collection/zipball/460f4e84de9e2761e8216359022581c7d43e80ae",
-                "reference": "460f4e84de9e2761e8216359022581c7d43e80ae",
+                "url": "https://api.github.com/repos/cakephp/collection/zipball/1f15659671fbbd46d4a48b19bb8fac3ae4857cc1",
+                "reference": "1f15659671fbbd46d4a48b19bb8fac3ae4857cc1",
                 "shasum": ""
             },
             "require": {
@@ -703,7 +703,7 @@
                 "collections",
                 "iterators"
             ],
-            "time": "2019-09-09T13:08:53+00:00"
+            "time": "2019-10-30T04:06:05+00:00"
         },
         {
             "name": "clue/block-react",
